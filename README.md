@@ -24,3 +24,13 @@ By making the default `auth.User` model have unique email field, and a few other
 The goal of this package is to give you the tools you need for login-by-email with Django's default `User` model. I believe this should be a option in Django itself, so it's a proof-of-concept for a future discussion there too. 
 
 **Coming Soon**
+
+
+## Testing
+
+* Clone the repo, create a virtual environment, and `pip install -e .` the package.
+* You can run with `just test`.
+
+    This wraps the full command:
+
+        django-admin test --settings=tests.settings --pythonpath=.
