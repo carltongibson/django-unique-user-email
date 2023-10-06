@@ -31,6 +31,13 @@ INSTALLED_APPS = [
     "tests",
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'unique_user_email.backend.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+LOGIN_REDIRECT_URL = "/admin/"
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
