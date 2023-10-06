@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.test import TestCase
-
 from unique_user_email.backend import EmailBackend
 from unique_user_email.forms import AuthenticationForm
 
@@ -95,7 +94,10 @@ class EmailBackendTests(TestCase):
 class AuthenticationFormTests(TestCase):
     def setUp(self) -> None:
         self.user = User.objects.create_user(
-            username="testUser", email="a@b.com", password="testPassword", is_staff=True,
+            username="testUser",
+            email="a@b.com",
+            password="testPassword",
+            is_staff=True,
         )
 
     def test_get_credentials_with_email(self):
