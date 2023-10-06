@@ -21,6 +21,6 @@ Again, the vast majority of projects should **never** need to customise the cent
 Most projects, all folks wanted was login-by-email. 
 By making the default `auth.User` model have unique email field, and a few other bits and bobs, this is enabled. 
 
-The goal of this package is to give you the tools you need for login-by-email with Django's default `User` model. I believe this should be a option in Django itself, so it's a proof-of-concept for a futyre discussion there too. 
+The goal of this package is to give you the tools you need for login-by-email with Django's default `User` model. I believe this should be a option in Django itself, so it's a proof-of-concept for a future discussion there too. 
 
 **Coming Soon**
