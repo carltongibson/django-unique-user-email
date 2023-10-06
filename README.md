@@ -7,7 +7,7 @@ Enable login-by-email with the default User model for your Django project by mak
 ## A quick note on why? 
 
 Django's _leaky battery_ is its recommendation that you create a custom user model. 
-Auth is so central and so standard that, into the high-nines (99.99%?), the vast majority of projects should **never** need to customise the auth. 
+Auth is so central and so standard that, into the high-nines (99.99%?), the vast majority of projects should **never** need to customise the central auth model. 
 This is a battery that Django should very much provide. 
 
 There's a complexity tax from exposing the auth model. 
