@@ -23,4 +23,4 @@ class UniqueUserEmailConfig(AppConfig):
         ]
         User._meta.constraints = User.Meta.constraints
         # ... as long as original_attrs is not updated.
-        # User._meta.original_attrs["constraints"] = User.Meta.constraints
+        User._meta.original_attrs["constraints"] = User.Meta.constraints

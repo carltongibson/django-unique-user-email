@@ -6,6 +6,7 @@ from django.db import IntegrityError
 from django.test import TestCase
 from unique_user_email.backend import EmailBackend
 from unique_user_email.forms import AuthenticationForm
+from django.db.models.constraints import UniqueConstraint
 
 
 class UniqueEmailTestCase(TestCase):
@@ -55,6 +56,13 @@ class UniqueEmailTestCase(TestCase):
         ):
             user2.save()
 
+    def test_user_constraints(self):
+        self.assertIsInstance(User._meta.constraints[0], UniqueConstraint)
+        self.assertEqual("unique_user_email", User._meta.constraints[0].name)
+        self.assertEqual(
+            "unique_user_email",
+            User._meta.original_attrs.get("constraints")[0].name
+        )
 
 class EmailBackendTests(TestCase):
     def test_none_for_username_logins(self):
