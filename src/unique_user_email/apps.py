@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+from django.db.models import Q
 
 
 class UniqueUserEmailConfig(AppConfig):
@@ -14,13 +15,19 @@ class UniqueUserEmailConfig(AppConfig):
         # field._unique = True
         #
         # But setting a constraint does not...
-        User.Meta.constraints = [
+        unique_user_email_constraints = User.Meta.constraints = [
             models.UniqueConstraint(
-                name="unique_user_email",
                 fields=["email"],
+                name="unique_user_email",
                 # deferrable=models.Deferrable.DEFERRED,
             ),
+            models.CheckConstraint(
+                check=~Q(email__exact=""),
+                name="check_required_email",
+                violation_error_message="A valid 'Email address' is required.",
+            ),
         ]
-        User._meta.constraints = User.Meta.constraints
+        User._meta.constraints = unique_user_email_constraints
         # ... as long as original_attrs is not updated.
-        User._meta.original_attrs["constraints"] = User.Meta.constraints
+        User._meta.original_attrs["constraints"] = unique_user_email_constraints
+        User.REQUIRED_FIELDS = ("email",)

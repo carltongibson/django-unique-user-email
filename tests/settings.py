@@ -1,4 +1,3 @@
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,14 +25,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "unique_user_email",
     "tests",
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'unique_user_email.backend.EmailBackend',
-    'django.contrib.auth.backends.ModelBackend',
+    "unique_user_email.backend.EmailBackend",
+    "django.contrib.auth.backends.ModelBackend",
 ]
 
 LOGIN_REDIRECT_URL = "/admin/"

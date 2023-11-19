@@ -1,12 +1,13 @@
 from django import forms
 from django.conf import settings
+from django.contrib.admin.sites import site as default_site
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.db import IntegrityError
+from django.db import IntegrityError, models
 from django.test import TestCase
+from unique_user_email.admin import UniqueUserEmailAdmin
 from unique_user_email.backend import EmailBackend
 from unique_user_email.forms import AuthenticationForm
-from django.db.models.constraints import UniqueConstraint
 
 
 class UniqueEmailTestCase(TestCase):
@@ -56,13 +57,30 @@ class UniqueEmailTestCase(TestCase):
         ):
             user2.save()
 
-    def test_user_constraints(self):
-        self.assertIsInstance(User._meta.constraints[0], UniqueConstraint)
-        self.assertEqual("unique_user_email", User._meta.constraints[0].name)
-        self.assertEqual(
-            "unique_user_email",
-            User._meta.original_attrs.get("constraints")[0].name
+    def test_user_model_constraints(self):
+        unique_user_email_unique_constraint = models.UniqueConstraint(
+            fields=["email"],
+            name="unique_user_email",
         )
+        unique_user_email_check_constraint = models.CheckConstraint(
+            check=~models.Q(email__exact=""),
+            name="check_required_email",
+            violation_error_message="A valid 'Email address' is required.",
+        )
+        self.assertEqual(User._meta.constraints[0], unique_user_email_unique_constraint)
+        self.assertEqual(User._meta.constraints[1], unique_user_email_check_constraint)
+        self.assertEqual(
+            User._meta.original_attrs.get("constraints")[0],
+            unique_user_email_unique_constraint,
+        )
+        self.assertEqual(
+            User._meta.original_attrs.get("constraints")[1],
+            unique_user_email_check_constraint,
+        )
+
+    def test_user_model_required_fields(self):
+        self.assertIn("email", User.REQUIRED_FIELDS)
+
 
 class EmailBackendTests(TestCase):
     def test_none_for_username_logins(self):
@@ -129,3 +147,13 @@ class AuthenticationFormTests(TestCase):
                     response,
                     settings.LOGIN_REDIRECT_URL,
                 )
+
+
+class UniqueUserEmailAdminTest(TestCase):
+    """Unique user email admin tests."""
+
+    admin = UniqueUserEmailAdmin(User, default_site)
+
+    def test_add_fieldsets(self):
+        """Test add fieldsets."""
+        self.assertIn("email", self.admin.add_fieldsets[0][1]["fields"])
