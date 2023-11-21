@@ -7,7 +7,8 @@ from django.db import IntegrityError, models
 from django.test import TestCase
 from unique_user_email.admin import UniqueUserEmailAdmin
 from unique_user_email.backend import EmailBackend
-from unique_user_email.forms import AuthenticationForm
+
+from src.unique_user_email.forms import AuthenticationForm
 
 
 class UniqueEmailTestCase(TestCase):
@@ -28,6 +29,13 @@ class UniqueEmailTestCase(TestCase):
             data={
                 "username": "testuser2",
                 "email": self.user.email,
+            }
+        )
+        self.assertIs(False, form.is_valid())
+        form = UserForm(
+            data={
+                "username": "testuser2",
+                "email": "",
             }
         )
         self.assertIs(False, form.is_valid())
@@ -157,3 +165,7 @@ class UniqueUserEmailAdminTest(TestCase):
     def test_add_fieldsets(self):
         """Test add fieldsets."""
         self.assertIn("email", self.admin.add_fieldsets[0][1]["fields"])
+
+    def test_email_field_required(self):
+        """Test user admin email field is required."""
+        self.assertTrue(self.admin.form().fields["email"].required)
