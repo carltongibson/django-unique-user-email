@@ -1,7 +1,26 @@
 from django import forms
 from django.contrib.auth import authenticate
+from django.contrib.auth.forms import UserChangeForm as BaseUserChangeForm
+from django.contrib.auth.forms import UserCreationForm as BaseUserCreationForm
 from django.contrib.auth.forms import UsernameField
 from django.core import exceptions, validators
+
+
+class EmailRequiredMixin(object):
+    """A mixin to handle a email field as required on user forms."""
+
+    def __init__(self, *args, **kwargs):
+        """Initialize the form."""
+        super().__init__(*args, **kwargs)
+        self.fields["email"].required = True
+
+
+class UniqueUserEmailCreationForm(EmailRequiredMixin, BaseUserCreationForm):
+    """Override default Django UserCreationForm with required email."""
+
+
+class UniqueUserEmailChangeForm(EmailRequiredMixin, BaseUserChangeForm):
+    """Override default Django UserChangeForm with required email."""
 
 
 class AuthenticationForm(forms.Form):
