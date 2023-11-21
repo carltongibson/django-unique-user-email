@@ -7,8 +7,7 @@ from django.db import IntegrityError, models
 from django.test import TestCase
 from unique_user_email.admin import UniqueUserEmailAdmin
 from unique_user_email.backend import EmailBackend
-
-from src.unique_user_email.forms import AuthenticationForm
+from unique_user_email.forms import AuthenticationForm
 
 
 class UniqueEmailTestCase(TestCase):

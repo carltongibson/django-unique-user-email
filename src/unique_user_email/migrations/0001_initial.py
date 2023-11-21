@@ -1,6 +1,6 @@
 from django.db import migrations, models
 
-from src.unique_user_email.utils import AuthAddConstraint
+from unique_user_email.utils import AuthAddConstraint
 
 
 class Migration(migrations.Migration):
