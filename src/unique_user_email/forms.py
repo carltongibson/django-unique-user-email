@@ -59,8 +59,8 @@ class AuthenticationForm(forms.Form):
         self.user_cache = authenticate(self.request, **credentials)
         if self.user_cache is None:
             raise forms.ValidationError(
-                "Please enter a correct username/email and password. Note that both "
-                "fields are case-sensitive."
+                "Please enter a correct username/email and password. The username "
+                "field is case-sensitive."
             )
         return self.cleaned_data
 
