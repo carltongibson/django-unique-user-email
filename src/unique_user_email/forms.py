@@ -21,7 +21,7 @@ class AuthenticationForm(forms.Form):
     )
 
     def __init__(self, request=None, *args, **kwargs):
-        self.request = request  # ???: Do we need this?
+        self.request = request
         self.user_cache = None
         super().__init__(*args, **kwargs)
 
