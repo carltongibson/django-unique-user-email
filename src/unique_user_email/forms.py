@@ -52,7 +52,6 @@ class AuthenticationForm(forms.Form):
     def clean(self):
         super().clean()
         if self._errors:
-            print(self._errors)
             return
 
         credentials = self.get_credentials()
