@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UsernameField
 from django.core import exceptions, validators
+from django.utils.translation import gettext_lazy as _
 
 
 class AuthenticationForm(forms.Form):
@@ -14,9 +15,9 @@ class AuthenticationForm(forms.Form):
     - Exposes the user for use in the view.
     """
 
-    login = UsernameField(max_length=150, label="Username or Email")
+    login = UsernameField(max_length=150, label=_("Username or Email"))
     password = forms.CharField(
-        label="Password",
+        label=_("Password"),
         widget=forms.PasswordInput(attrs={"autocomplete": "current-password"}),
     )
 
