@@ -20,7 +20,9 @@ By making the default `auth.User` model have unique email field, and a few other
 
 The goal of this package is to give you the tools you need for login-by-email with Django's default `User` model. I believe this should be a option in Django itself, so it's a proof-of-concept for a future discussion there too.
 
-A longer discussion, **Coming Soon**. Until then I did [a blog post that says a little more](https://noumenal.es/posts/django-unique-user-email/928/).
+A longer discussion: [Evolving Django’s auth.User](https://buttondown.com/carlton/archive/evolving-djangos-authuser/)
+
+Previously, [a blog post that says a little by way of introduction](https://noumenal.es/posts/django-unique-user-email/928/).
 
 ## Overview
 
