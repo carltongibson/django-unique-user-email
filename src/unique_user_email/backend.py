@@ -21,7 +21,7 @@ class EmailBackend(BaseBackend):
             return
 
         try:
-            user = User.objects.get(email=email, is_active=True)
+            user = User.objects.get(email__iexact=email, is_active=True)
         except User.DoesNotExist:
             # Run the default password hasher once to reduce the timing
             # difference between an existing and a non-existing user. See ModelBackend.
